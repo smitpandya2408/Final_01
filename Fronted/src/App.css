@@ -1,10 +1,13 @@
 @import "tailwindcss";
+
+
 /* in styles.css or App.css */
 .slick-dots li button:before {
   font-size: 16px;
-  color: #4B5563; /* Tailwind's gray-600 */
+  color: #4b5563; /* Tailwind's gray-600 */
 }
 
 .slick-dots li.slick-active button:before {
-  color: #1F2937; /* Tailwind's gray-800 */
+  color: #1f2937; /* Tailwind's gray-800 */
 }
+

@@ -1,7 +1,28 @@
+// import { document } from "postcss";
 import React, { useEffect, useState } from "react";
+import Login from "./Login";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [sticky, setSticky] = useState(false);
+
+  //   const [theme, setTheme] = useState(
+  //   localStorage.getItem("theme") || "light"
+  // );
+
+  // useEffect(() => {
+  //   const element = document.documentElement;
+
+  //   if (theme === "dark") {
+  //     element.classList.add("dark");
+  //     localStorage.setItem("theme", "dark");
+  //   } else {
+  //     element.classList.remove("dark");
+  //     localStorage.setItem("theme", "light");
+  //   }
+  // }, [theme]);
+
+  // Handle theme toggle
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,10 +39,10 @@ const Navbar = () => {
   const navItems = (
     <>
       <li>
-        <a>Home</a>
+        <a href="/">Home</a>
       </li>
       <li>
-        <a>Course</a>
+        <a href="/cource">Course</a>
       </li>
       <li>
         <a>Contact</a>
@@ -98,33 +119,14 @@ const Navbar = () => {
             </label>
           </div>
 
-          <label className="swap swap-rotate">
-            <input
-              type="checkbox"
-              className="theme-controller"
-              value="synthwave"
-            />
-            {/* Sun icon */}
-            <svg
-              className="swap-off h-8 w-8 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              {/* <path d="M5.64,17l-.71.71...Z" /> */}
-            </svg>
-            {/* Moon icon */}
-            <svg
-              className="swap-on h-8 w-8 fill-current"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              {/* <path d="M21.64,13a1,1,0,0,0-1.05...Z" /> */}
-            </svg>
-          </label>
-
-          <button className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer">
+          <Link
+            className="bg-black text-white px-3 py-2 rounded-md hover:bg-slate-800 duration-300 cursor-pointer"
+            onClick={() => document.getElementById("my_modal_3").showModal()}
+          >
             Login
-          </button>
+          </Link>
+
+          <Login />
         </div>
       </div>
     </div>
