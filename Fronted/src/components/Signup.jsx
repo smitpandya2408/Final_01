@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import Login from "./Login";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function Signup() {
   const {
@@ -15,9 +17,28 @@ function Signup() {
     if (dialog) dialog.showModal();
   };
 
-  const onSubmit = (data) => {
-    console.log("Signup data:", data);
-    // You can send data to backend here
+  const onSubmit = async (data) => {
+    const userinfo = {
+      fullname: data.fullname,
+      email: data.email,
+      password: data.password,
+    };
+
+    await axios
+      .post("http://localhost:3000/user/signup", userinfo)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          toast.success("Signupcd  successfully");
+          localStorage.setItem("Users", JSON.stringify(res.data)); // ✅ Fix: stringify
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error);
+          toast.error("Error: " + error.response.data.message);
+        }
+      });
   };
 
   return (
@@ -44,7 +65,9 @@ function Signup() {
               className="w-full px-3 py-1 border rounded-md outline-none"
               {...register("email", { required: "Email is required" })}
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
           </div>
 
           <div className="mt-4 space-y-2">
@@ -54,9 +77,11 @@ function Signup() {
               type="text"
               placeholder="Enter your name"
               className="w-full px-3 py-1 border rounded-md outline-none"
-              {...register("name", { required: "Name is required" })}
+              {...register("fullname", { required: "Name is required" })}
             />
-            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+            {errors.fullname && (
+              <p className="text-red-500 text-sm">{errors.fullname.message}</p> // ✅ Fix: fullname instead of name
+            )}
           </div>
 
           <div className="mt-4 space-y-2">
@@ -68,7 +93,9 @@ function Signup() {
               className="w-full px-3 py-1 border rounded-md outline-none"
               {...register("password", { required: "Password is required" })}
             />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
           </div>
 
           <div className="flex flex-col items-center gap-2 mt-5">

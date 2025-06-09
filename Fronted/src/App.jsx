@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Cource from "./components/Cource";
 import Cou1 from "./C1/Cou1";
 import Signup from "./components/Signup";
+import {Toaster} from "react-hot-toast"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/cource" element={<Cou1/>}></Route>
         <Route path="/signup" element={<Signup/>}></Route>
       </Routes>
+      <Toaster/>
       </div>
     </>
   );
