@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Login from "./Login";
 import { Link } from "react-router-dom";
+import Logout from "./Logout";
 
 const Navbar = () => {
   const [sticky, setSticky] = useState(false);
@@ -42,7 +43,10 @@ const Navbar = () => {
         <a href="/">Home</a>
       </li>
       <li>
-        <a href="/cource">Course</a>
+        <Link to={"/cource"}>
+          {" "}
+          <a href="">Course</a>
+        </Link>
       </li>
       <li>
         <a>Contact</a>

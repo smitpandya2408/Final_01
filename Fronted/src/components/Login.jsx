@@ -1,34 +1,44 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { AuthContext } from "../context/AuthProvider";
 
 function Login() {
+  const { authUser } = useContext(AuthContext);
+  const { setAuthUser } = useContext(AuthContext);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data, e) => {
+    e.preventDefault();
+
     const userinfo = {
       email: data.email,
       password: data.password,
     };
 
     try {
-      const res = await axios.post("http://localhost:3000/user/login", userinfo);
+      const res = await axios.post(
+        "http://localhost:3000/user/login",
+        userinfo
+      );
       console.log(res.data);
 
       if (res.data) {
-        toast.success("Login successfully")
+        toast.success("Login successfully");
         localStorage.setItem("Users", JSON.stringify(res.data.user));
+        setAuthUser(true);
+        console.log(authUser);
         document.getElementById("my_modal_3")?.close(); // Close modal after login
       }
     } catch (error) {
       if (error.response) {
-        
         toast.error("Error: " + error.response.data.message);
       } else {
         console.log(error);
@@ -41,7 +51,10 @@ function Login() {
     <dialog id="my_modal_3" className="modal">
       <div className="modal-box">
         <form method="dialog">
-          <Link to="/" className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+          <Link
+            to="/"
+            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+          >
             ✕
           </Link>
         </form>
